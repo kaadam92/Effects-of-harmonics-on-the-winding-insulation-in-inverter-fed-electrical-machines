@@ -97,6 +97,19 @@ Motor winding insulation, inverter, harmonics, PWM
 
 \section{Introduction}
 
+In the world electrical energy usage, electrical drive systems are one of the biggest contributors. They are present from the few Watts to the Megawatt range. Focusing on the low voltage segment, DC motors were used in wide ranges due to the simplicity of their control. However with the progress of the semiconductor industry, VFD drives get more and more affordable even in the smallest segments. Three phase AC machines (both sinusoidal and trapezoidal field ones) gained their market share quickly. Because the lack of the brushes and the commutator, they are practically maintenance free, and more quiet. With modern drive controls they are precisely controllable, even in servo or high precision drives.
+
+With the introduction of VFD systems, conventional electrical motor lifetimes are noticeably shorter. VFD drives applying a new type of stress on the motors, because of their operation principle. The output voltage has much higher frequency elements, the voltage slew rate can cause reflections on the motor cable, and harmonics and asymmetry can course current flow on he motor shaft and the bearings. 
+
+\begin{figure}[h]
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/ac_plant.png}}
+ \caption{Random and formed winding.}
+ \label{fig:acplant}
+\end{figure}
+
+A average industrial drive system overview is presented on Figure \aref{fig:acplant}. Huge industrial facilities are usually have their own low voltage grid, or even middle voltage grid, depending on the used power. These subgrids are locally compensated for reactive power. There are other devices supplied by this grid, so EMC/EMI considerations are also have to be taken account. Because in most application, individual motor speed adjustments are necessary, Variable Frequency Drives are applied for the high power drives as well. This high power drives are operating with lower switching frequency, causing high amount of low order harmonics currents in the motors, which leads to additional thermal stress. Thermal degradation is also a limiting factor of the motors lifetime.
+
+
 \subsection{Insulation in electrical machines}
 
 Electrical motors are the devices which can convert electrical power to mechanical, based on electromagnetic principles. Therefore the largest part of the motor is built from electrically conductive materials. The point of the electrical insulation in electrical machine is to keep the electrical current in the desired conductors. The design goal with electrical machines is to achieve as high power density as possible both in volume and mass. In this approach insulation is not provide any value, however it is necessary to keep the machine functional. The conclusion is to keep the insulation as thin and as light as possible to provide space to magnetically and electrically active volumes, without compromising reliability.
@@ -159,8 +172,11 @@ H                   & 180                                            & 165      
 \caption{Insulation classes}
 \label{tab:temp}
 \end{table}
-
+The development of the squirrel cage induction motor, with its associated insulation system,has generally been for sinusoidal supplies. Its design is well proven and inherently robust
+leading to long reliable service with minimum maintenance.
 One of the major reason behind motor failures is insulation aging and degradations. These effects are not caused by the VFD drive feeding, but it can be accelerated due the high frequency input. Over time, th insulation becomes more and more brittle, the thermal expansion cycles and the mechanical stress will cause small cracks. This small cracks are become larger and larger, pollution and moisture can reach to the conductor, and the insulation will be weaker and weaker, or starts disintegrating. The life expectancy of the insulation will also be affected by an excessive  operating temperature. It is halved for every 11∞C rise in temperature over its rated value and occurs when a machine is occasionally over-loaded. Sometimes the size of the machine may be only marginal when it was initially chosen and with the passage of time, it may be required to perform duties that are too arduous.
+Practical life of insulation systems, and hence motor life, can be many years with ultimate failure likely to be through thermal and mechanical degradation of the insulating materials, not by
+short-term direct electrical breakdown.
 
 \subsection{Insulations systems}
 \subsubsection{Steel lamination insulations}
@@ -197,8 +213,90 @@ For large motors, the practice is to wind the stator with formed coils (Figure 9
 
 \section{Insulation failure mechanism}
 
+\subsection{Overvoltage due reflections}
+
+The PWM pulse rise-times are so short that their propagation along the motor cable to the motor can change the pulse shape and may produce a voltage overshoot. The cable can be considered as a transmission line, i.e. a long string of distributed series/parallel connected, inductor-capacitor sections as shown in Figure 3. For simplicity only one phase is represented.
+
+At each pulse edge, the drive has to charge the inductance and capacitance of the cable, so a pulse of energy is delivered into the cable.
+Transmission line theory shows that the pulse travels at a speed equal to 1/√𝐿𝐶 m/s, where L (Henries) and C (Farads) are the inductance and capacitance per meter, respectively. The velocity of propagation of a pulse in a typical PVC-insulated cable is about 1.7 x 108 m/s (i.e. in 100 ns the pulse travels only 17 m). It varies little over the variety of cable types in general use, since it is determined mainly by the permittivity of the internal insulating material.
+The essential features of how a pulse propagates along the motor cable are illustrated in Figure 4 to Figure 7, and Figure 8 on the following pages.
+
+Motor peak voltage is therefore a function of both cable length and rise time. For example, with 20 m of cable with a velocity of 1.7 x 108 m/s, any pulse with a rise-time less than 235 ns can
+be expected to increase by nearly 100\%. Figure 9 shows some typical measured voltage waveforms (based on a 460 V test supply) which show this effect in practice. Even with 4 m of cable some overshoot is apparent. With 42 m the overshoot is virtually 100\%.
+
+\subsection{Winding Voltage}
+The voltage overshoot has little effect on the main motor insulation systems between phases and from phase to earth, which are designed to withstand large over voltages. However,
+because of its short rise-time the voltage overshoot also stresses the insulation between turns, and especially between randomly touching conductors within a coil or between coil ends.
+The front edge of the voltage pulse with its succession of voltage peaks (Figure 8) will travel around the motor winding as it does along the motor cable, with a measurable propagation
+time. Figure 11 illustrates how this may result in a large proportion of the pulse appearing between turns, at random points within a coil or between coil ends. This effect progressively
+decays to a uniform voltage distribution in subsequent coils due to high frequency inductive and capacitive losses.
+
+Dependent on motor and winding parameters (e.g. motor rating, type of winding, number of turns, size of coil, turn propagation time etc) and the time between reflected peaks in the Page 13 of 29
+incident terminal voltage, the voltage appearing between turns or randomly within a coil may briefly reach between 30\% and 90\% of the incident peak voltage.
+
+Figure 12 shows the possible variations in first coil voltage plotted against the rise time of the incident peak voltage plotted against the rise time of the incident peak voltage at the motor
+terminals.
+With a sinusoidal supply voltage (uniformly distributed), the coil ends only experience a fraction of the phase voltage, as determined by the number of coils. With a variable speed drive
+therefore, there can be a considerable increase in the voltage stress within a coil.
+
+\subsections{Insualtion Breakdowns}
+There are three suggested possibilities for insulation damage:-
+ Breakdown between coil and stator core
+Normally not a problem as slot liners are used
+ Phase to phase failure - in the slots or end-windings
+Normally not a problem as motors use inter-phase barriers (or are form-wound)
+ Inter-turn failure between adjacent conductors in the stator winding
+The most probable cause of failure due to the non-uniform distribution of voltage
+along the stator windings, associated with the short rise times of the incident
+voltage pulses as described in Section 2.With form wound motors, this is a less
+significant problem because the turns are evenly distributed within the slot.
+Depending upon the homogeneity of the stator winding materials and impregnation, there may
+be voids in the impregnating resin, see Figure 19. It is in such voids that the failure mechanism
+in the inter-turn insulation occurs. The failure mechanism is a complex phenomenon called
+partial discharge (PD).
+PD is a low energy discharge that occurs when both the following conditions apply:
+ The peak value of the applied voltage is lower than the actual breakdown voltage of
+the insulation system
+ The local electric field intensity that is created in a void or cavity is sufficient to
+exceed the breakdown strength in air (Partial Discharge Inception Voltage)
+
+When subject to continuous partial discharges, the insulation system progressively degrades,
+prematurely ageing the insulation material. The ageing process results from an erosion of the
+insulation material, reducing its thickness at the discharge sites until its breakdown voltage
+capability is reduced to below the level of the applied voltage peak, at this stage insulation
+breakdown occurs.
+Investigations, particularly at Dresden University [3] have produced relationships for model
+insulation systems between the applied peak voltage, rise times, the probability of PD and the
+insulation lifetime. The results are shown in Figure 20 for a reference temperature of 20°C with
+a typical standard induction motor insulation system that is rated for operation with a nominal
+supply voltage up to 500V a.c. on an inverter supply.
+Figure 20 (a) which is based on the Dresden results, shows the cumulative number of pulses
+(0.1 μs rise time, 5 μs duration) that the insulation should survive whilst Figure 20 (b) shows
+the probability of PD occurring, both plotted against the pulse amplitude of the applied voltage.
+PD inception voltage is influenced by temperature.
+
 \section{Preventing insulation over-stress}
 
+In applications where it is not feasible to employ motors which meet the withstand capability
+achieved with standard or enhanced insulation given in Figure 21 curve A or B respectively,
+some form of alternative solution is required.
+Examples where these alternative solutions may be required include:
+ Undefined motor characteristics
+ Retrofit application of VSDs to ‘old’ motors
+ Motors with inadequate pulse withstand capabilities
+In the above cases, some form of motor terminal voltage modification technique is necessary.
+These techniques essentially involve placing additional apparatus between the motor and the
+inverter to limit the rate of rise of the pulse, reduce the reflection coefficient and thereby reduce
+the peak voltage level. Some of the devices are also used to compensate for large capacitive
+cable charging currents. These techniques may be summarised as follows:
+ Output Reactors
+ Output dv/dt Filters (sometimes known as dU/dt filters)
+ Sinusoidal Filters
+ Motor Termination Units
+These solutions should be correctly matched to the application and the basic characteristics
+are as described below.
+In each case the effects of volt drop in the device on the final terminal voltage should be
+established.
 
 \section{Inverter rated motors}
 
@@ -211,7 +309,15 @@ For large motors, the practice is to wind the stator with formed coils (Figure 9
 
 \section{Summary}
 
-
+A combination of fast switching semiconductors and ‘long’ motor cables can cause
+peak voltages up to twice the DC link voltage (2.7 times the supply voltage) due to
+transmission line effects. In extreme cases, this high peak voltage and the uneven
+voltage distribution in the motor windings can cause a low energy partial discharge
+between turns of the first coil. Partial discharge can cause premature ageing effects of
+the winding insulation system until failure occurs.
+ By selecting the correct motor, or by the use of appropriate preventative measures,
+damaging partial discharge can be avoided, thereby ensuring the maximum motor life
+is achieved.
 
 
 
