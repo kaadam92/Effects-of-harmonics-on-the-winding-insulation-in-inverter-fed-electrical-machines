@@ -1,0 +1,494 @@
+\usepackage{gensymb}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+   
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Villamos vontatású járművek élettani hatásai}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+%\author{
+%\IEEEauthorblockN{David Kiss}
+%\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
+%Georgia Institute of Technology\\
+%Atlanta, Georgia 30332--0250\\
+%Email: http://www.michaelshell.org/contact.html}
+%\and
+%\IEEEauthorblockN{Homer Simpson}
+%\IEEEauthorblockA{Twentieth Century Fox\\
+%Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\and
+%\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
+%\IEEEauthorblockA{Starfleet Academy\\
+%San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212\\
+%Fax: (888) 555--1212}}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+\author{\IEEEauthorblockN{Kiss Dávid}
+\IEEEauthorblockA{Budapesti Műszaki és Gazdaságtudományi Egyetem\\
+Automatizálási és Alklmazott Informatika Tanszék \\
+E-mail: david.kiss@aut.bme.hu;}
+}
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+%\boldmath
+Az Elektromos járművek gyorsuló elterjedésével joggal merül fel az igény, hogy megvizsgáljuk milyen élettani hatásai lehetnek a napi szintű érintkezésnek. Bár a villamos vontatás a tömegközlekedésben és a teherszállításban évtizedek óta mindennapos, a társadalom számára mégis az Elektromos autózás rohamos terjedésével vált a köztudatban létező fogalommá. A 90-es éve folyamán a mobiltelefonok elterjedésével a kritikus hangok is megjelentek, melyek a rádió-telefonálás vélt vagy valós élettani következményeit kutatták. Ezek a kérdések azóta is újra és újra felmerülnek, illetve felmerültek az Elektromos gépjárművek kapcsán is. Bár az Egészségügyi Világszervezet (WHO) az alacsony frekvenciás Elektromos és mágneses teret lehetséges rák okozónak tarja, egyértelmű kutatási eredmények ezekben a témákban még nem születtek. Jelen írás ezt a témát kívánja körbejárni, kezdve az Elektromos jármű kapcsán felmerülő lehetséges veszély forrásokkal, majd pedig az ezek által okozott jelenségek súlyosságának vizsgálatával.
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Electric Vehicle, EV, Radiated Emission, ELF
+\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+\section{Bevezetés}
+
+\subsection{Energiatárolás}
+
+Az Elektromos autók hajtás rendszere nagyban eltér a konvencionálisnak mondható, belső égésű motoros megoldástól. Ezek a járművek egy tartályban hordozzák az üzemanyagot, melyben tárolják azt az energiát, amit később a belső égésű motor segítségével mozgási energiává szeretnénk alakítani. Ez az üzemanyag többnyire benzin vagy gázolaj.
+
+\begin{table}[h]
+\centering
+\caption{Járművekben használt energiatároló megoldások energia sűrűsége\cite{wiki_dens}}
+\label{density}
+\begin{tabular}{l|l|lll}
+                   & \multicolumn{1}{l|}{Energia sűrűség (MJ/L)} & \multicolumn{1}{l}{Energia sűrűség (MJ/kg)} &  &  \\ \cline{1-3}
+Benzin             & 34,5                                       & 46,4                                       &  &  \\ \cline{1-3}
+Dízel              & 35,8                                       & 48                                         &  &  \\ \cline{1-3}
+Li-Ion akkumulátor & 4,32                                       & 1,8                                        &  & 
+\end{tabular}
+\end{table}
+
+Ezt helyettesíti az Elektromos járművekben az akkumulátor helyettesíti, mely napjainkban leggyakrabban Li-Ion cellákból épül fel. Ez maga az első veszély forrás. Ahhoz, hogy járművünk hatótávolsága megengedje a mindennapi használatot, óriási mennyiségű energiát kell magunkkal vinnünk. A Tesla P75D, mely éppen ezzel, a mindennapi használhatósággal kívánta magára felhívni a figyelmet, $75 kWh\ ( = 270 MJ)$ akkumulátor kapacitással rendelkezik, és ezzel a gyártó szerint 259 mérföld, azaz 419 km megtételére képes. \Aref{density}. táblázatból kiolvasható adatok alapján, ez azt jelenti, hogy körülbelül  $150\ kg$ nettó tömegű akkumulátort kell az autónak magával vinnie. Ehhez természetesen még hozzáadódik a biztonságos tároláshoz szükséges dobozolás tömege is. Ez a jármű $2163\ kg$ össztömegéből közel $10 \%$-ot tesz ki.
+
+Az akkumulátor fizikai tulajdonságaiból adódó probléma, hogy soha nem hozható energia mentes állapotba, azaz a vele való munka mindig veszélyt hordoz magában, ellentétben az üzemanyag tartállyal, melyet leeresztve meggyőződhetünk annak energia mentességéről. Érzékeny továbbá a mechanikai sérülésekre. Egy deformálódott vagy felsértett cella könnyedén lángra kaphat, akár napokkal a sérülés bekövetkezte után. Az így keletkező tűz pedig a szomszédos cellákat is begyújthatja. Ezek a cellák érzékenyek továbbá az üzemi tartományok pontos betartására is. Igaz ez mind az üzemi feszültség tartományra, mind a terhelő és töltő áramra, mind pedig a cellák hőmérsékletére. Ezeknek a paramétereknek a betartására az akkumulátorhoz tartozó menedzsment elektronika figyel.
+
+
+Ezek az akkumulátorok sok feszültség szinten működhetnek, a mild-hybrid járművek $48\ V$-os rendszerétől kezdve egészen a $400-800\ V$-os rendszerekig. Ekkora feszültség szinteken az érintésvédelem témaköre sem maradhat említés nélkül. A jármű akkumulátorok a legtöbb esetben úgy kerülnek megépítésre, hogy annak háza és ezáltal a a jármű vázszerkezete is galvanikusan független az akkumulátor minden kivezetésétől. Ezáltal a nagyfeszültség "lebeg" a jármű referenciapontjához képest, illetve szabvány írja elő a szükséges átütési szilárdságot is. Ennek a szigetelésnek a meglétét egy eszköz, a szigetelés vizsgáló berendezés (IMD- Insulation Monitoring Device). Ez a berendezés jelzi a jármű vezérlésének, hogy szigetelési hiba lépett fel a rendszerben, így meg lehet tenni a szükséges óvintézkedéseket és el lehet hagyni a járművet.
+
+Emiatt különösen fontos, hogy az akkumulátor mindkét kivezetése galvanikusan el van választva a többi földelt elemtől a járművön: az egyszeres szigetelési hiba önmagában még nem okoz problémát. Mivel föld független egyenáramú rendszerről van szó, ahhoz hogy áramütés érhesse az embert, az akkumulátor mindkét kivezetésest meg kell érinteni. Vagy mivel a soros celláknak köszönhetően az akkumulátoron belül több feszültségszint is keletkezik, egy kellően nagy potenciál különbségű szakasz mindkét végét. Ahhoz tehát, hogy az áramütés előfordulhasson, kétszeres szigetelési hibának kell keletkezni, aminek a valószínűsége elhanyagolható, illetve az első hiba után a jármű meggátolja a további használatot. Amennyiben mégis keletkezne egy második szigetelési hiba, akkor sem inkább a közvetlen áramütés, hanem a tűz kialakulása jelentene nagyobb veszélyt. A jól földelt vázszerkezettel ugyanis rövidre zárjuk az akkumulátor celláit. Szerencsés esetben ez az akkumulátor biztosítóin keresztül történik, így azok megvédik az akkumulátort a károsodástól, azonban ha az akkumulátor doboza sérül, a cellák közvetlenül érhetnek hozzá a jármű vázához. Így olyan áramkör alakul ki, amelyben semmilyen áram korlátozó elem nem található, így pedig a tűz kialakulása valószínűleg elkerülhetetlen. Áramütésre, bár igen is valószínűséggel, a jármű töltése közben van még esély.
+
+Látható tehát, hogy önmagában az energia tárolás mennyi veszélyt hordoz magában. Természetesen a konvencionális üzemanyagok is veszélyesek, rendkívül tűzveszélyes folyadékok, ehhez a fajta veszélyhez azonban már jobban hozzászokott a társadalom. Ezen felül benzin és gázolaj esetében szabad szemmel is jól látható a veszély forrás jelenléte, a folyadék látható, a gőze érezhető, így pedig könnyebb reagálni is a különböző helyzetekre.
+
+
+\subsection{Meghajtás}
+
+Az akkumulátor önmagában nem elegendőd az Elektromos jármű üzemeltetéséhez. Ehhez szükséges még a motor vezérlő elektronika és maga a villamos motor is. A villamos gép többnyire három fázisú szinkron vagy aszinkron forgó gép. Ezek a gép típusok gyakorlatilag karbantártás mentesek, egy darab mozgó alkatrész tartalmaznak, illetve nincsen bennük kommutátor és egyéb kopó alkatrész (a csapágyazástól eltekintve). Sokkal egyszerűbb mechanikai konstrukció tehát, mint egy belső égésű motor, melyben megszámlálhatatlan forgó és alternáló mozgást végző alkatrész található. Nincsen lokális káros anyag kibocsátása, mivel nem használ fel semmilyen tüzelőanyagot. Ez nem jelenti azonban azt, hogy nem beszélhetnénk az Elektromos járművek emissziójáról, hiszen a felhasznált Elektromos energiát elő is kell állítani. Az Elektromos meghajtású jármű emisszióját tehát nagyban meghatározza, hogy milyen típusú erőműben került előállításra az akkumulátorban tárolt energia. Ezen felül beszélhetünk még a járműnek az életciklusra vonatkoztatott káros anyag kibocsátásáról. A jármű gyártása leginkább az akkumulátor miatt egészen más technikai folyamatokat igényel, mint belő égésű motoros társaié, így nem tekinthetünk el ennek az elemzésétől sem. Bár nem közvetlenül, de a környezet terhelésnek is lehet élettani következménye, így a IV. fejezet foglalkozik röviden ezzel a témával.
+
+Mint ahogy korábban említettük, az Elektromos járművek leggyakrabban három fázisú villamos géppel kerülnek meghajtásra. Mivel az akkumulátorban egyenáramú formában tároljuk az energiát, szükség van egy motorvezérlő elektronikára, mely ezt a teljesítmény átalakítást elvégzi, és az akkumulátorban tárolt energiát vezérelhető formában bocsátja a motorok rendelkezésére.
+
+Ez a teljesítmény átalakítás általában három fázisú feszültség-inverterrel kerül implementálásra. Ez a berendezés a három fázisú szinusz jelet három darab félhíd kapcsolású inverter szinuszos modulációjával éri el. Ez a modulációs frekvencia típusonként eltérő lehet, illetve akár változhat is, de nagyságrendjét tekintve $2 - 20\ kHz$ között helyezkedik el. Így tehetát a motorvezérlő és a motorok közti vezetékek egy a fenti alapfrekvenciájú, modulált, nagy feszültség-meredekségű PWM (Pulse Width Modulation, impulzus-szélesség moduláció) jelet szállítanak, nagy teljesítménnyel.
+
+Az áram azonban a motor Elektromos fordulatszáma szerinti alapharmónikus frekvenciával rendelkezik, mivel a motor tekercselésének induktivitása szűri a rajta folyó áramot. Természetesen az áramban is megjelenik a modulációs frekvencia, illetve nagyobb rendszámú felharmónikusok is.
+
+Így elmondható tehát, hogy a motorokhoz vezető kábelek mind Elektromos mind pedig mágneses térrel rendelkeznek. Az Elektromos tér csökkentését segíti árnyékolt kábel alkalmazása. A mágneses teret azonban nehezen tudjuk árnyékolni, ez ellen leginkább a jó pozicionálás véd.
+
+A II. fejezet az ilyen sugárzott terek hatását vizsgálja. A témából adódóan célszerűnek tűnik egy benzines és egy Elektromos jármű összehasonlítása. Így képet kaphatunk, hogy a hajtáslánc működési elvégből adódik-e különbség a mért értékekben, és milyen irányba. A III. fejezetben az esetleges áramütés során fellépő veszélyeket tárgyalja a cikk, az utolsó IV. fejezetben a jármű élet ciklusára vetített környezetkárosító hatásokat kerülnek bemutatásra.
+
+
+\section{Sugárzott Elektromos és Mágneses tér}
+
+Mivel minden áram járta vezető mágneses térrel rendelkezik, így az elektromos autóban található vezetők is.  Mivel ebben az esetben villamos energia szolgálja a jármű mozgatásához szükséges teljesítményt, így ezek az áramok igen nagyok is lehetnek. 600 V-os rendszer feszültség mellett is akár 50 - 100 A. Az akkumulátor és a motorvezérlő egység között DC áram folyik, míg az inverter és a motorok között váltakozó. Léteznek szervezetek, amelyek azzal foglalkoznak, hogy megállapítsák, hogy az emberi testet mekkora terhelés érheti biztonságosan, ilyen például az International Commission on Non-ionizing Radiation Protection (ICNIRP) nevű szervezet. A határ értékeket megadják mind statikus, mind váltakozó mágneses terekre.
+
+\begin{table}[h]
+\centering
+\label{my-label}
+\begin{tabular}{lc}
+\hline
+Kitettség típusa   & Mágneses fluxussűrűség \\ \hline
+Foglalkozásbeli    &                        \\
+\hspace{3mm}Fej és test        & 2 T                    \\
+\hspace{3mm}Végtagok           & 8 T                    \\
+Civil              &                        \\
+\hspace{3mm}Test bármely része & 400 mT                 \\ \hline
+\end{tabular}
+\caption{Az ICNIRP határtértékei statikus mágneses terek esetében\cite{artice:icnrip1}}
+\end{table}
+
+A határértékek célja ,hogy védelmet biztosítjon a mágneses tér lehetséges hatásaitól. Ez lehet az idegek stimulációja (1 Hz - 10 MHz) vagy a szövetek melegítése (100 kHz - 300 GHz). Utoljára ezek a határértékek 2010-ben kerültek felülvizsgálatra.
+
+A méréseket az autóba helyezett emberi test modell segítségével végezték el. Azokon a pontokon történt mérés, ahol várhatóan nagyobb a kitettség a mágneses térnek. Ilyen lehet az akkumulátor környéke, illetve a padlólemezhez és a motortérhez közel eső részek, pl. az első lábtér. Ezen felül az emberi test számára kritikus területek mérése is megtörtén, pl. a fej környéke. A mérés mind statikusan, mind pedig dinamikusan, különböző felhasználási módik között megtörtént. A felhasználás jellege nem befolyásolta a kialakuló mágneses teret, csak a felvett teljesítmény, ahogy az a \aref{fig:curr_correlation} ábrán is látszik. Ebből fakadóan a mérési ciklus egy erős gyorsítási és fékezési ciklusra redukálódott, illetve hosszútávú haladásra kis és nagy sebesség mellett.
+
+\begin{figure}[h]
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/curr_correl.png}}
+ \caption{Az áram és a mágneses fluxussűrűség kapcsolata}
+ \label{fig:curr_correlation}
+\end{figure}
+
+A vizsgált járművek pontos típusa nem került publikációra, de a mért paletta jelentős méretű. 8 különböző elektromos meghajtású autót, köztük hibrideket és tisztán elektromosakat, illetve még tüzelőanyag cellás típust is. is vizsgáltak a szerzők, széles teljesítmény spektrumon. A mérésbe referencia gyanánt került 3 belső égésű motoros gépjármű, mind dízel, mind pedig benzines motorral.
+
+
+\begin{table}[h]
+\centering
+\caption{A vizsgált járművek}
+\label{my-label}
+\begin{tabular}{lllll}
+\hline
+\multicolumn{1}{|l}{ID} & Hajtáslánc típus   & Villamos gép típusa & Teljesítmény (kW) & Akkumulátor (kWh) \\ \hline
+EV1                     & Elektromos         & Szénkefés DC        & 11                & 10                          \\
+EV2                     & Plug-in híbrid     & Állandó mágneses    & 30                & 5                           \\
+EV3                     & hibrid             & Indukciós           & 10                & 0,7                         \\
+EV4                     & Elektromos         & Állandó mágneses    & 10                & 14                          \\
+EV5                     & Elektromos         & Asszinkron          & 34                & 24.5                        \\
+EV6                     & Elektromos         & Állandó mágneses    & 40                & 24.                         \\
+EV7                     & Tüzelőanyag-cellás & Állandó mágneses    & 100               & 1.4                         \\
+EV8                     & Elektromos         & Állandó mágneses    & 35                & 16                          \\
+CV1                     & Benzin             & -                   & 75                & -                           \\
+CV2                     & Benzin             & -                   & 66                & -                           \\
+CV3                     & Dízel              & -                   & 125               & -                           \\ \hline
+\end{tabular}
+\end{table}
+
+A mérés során nehéz volt megkülönböztetni a külső hatásokból eredő hatásokat, illetve azokat, amelyek a jármű típusától függetlenül jelentkezhetnek. Ilyen külső forrás lehet pl. a kiépített villamosenergia hálózat mágneses ere, mely egy 50 Hz-es frekvencia komponensként azonosítható. Ezen felül okozhatnak zavart a csatornafedők, melyek felett elhalad a jármű.
+
+A belső források közül kiemelendő a kormány szervó elektromos motorja, mely bár kisebb teljesítményű, de kis feszültségen is működik, így igen nagy áramok folyhatnak rajta. Kiemelendő, és nem triviális belső forrás még a jármű kereke. A gumiabroncsok acél nagy sebességgel forgó acél köpenye egy a fordulatszámmal arányos frekvenciájú mágneses teret állít elő, mely szintén jól mérhető, nagyság rendje 1 - 2 \mu{}T.
+
+Elektromos járművek esetében a nyilvánvaló források az akkumulátor illetve a vezetékezés maga. Mivel az indukált mágneses tér a az áram által bezárt hurok méretével arányos, ezért az akkumulátor, nagy fizikai kiterjedése miatt nagy térrel is rendelkezhet. Ezen segíteni sem igazán lehet, hiszen ezek a méretek a technológiából adódnak. Ezzel szemben a kábelezés esetében látványos hatása van a fizikai elrendezésnek. Abban az esetben amikor a két áramvezető egymással párhuzamosan halad, mint pl. a kardán alagútban, az indukált tér sokkal kisebb, mint amikor a két vezeték eltávolodik egymástól. Ilyen tér lehet a bekötések helye.
+
+\begin{figure}[h]
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/ev_spect.png}}
+ \caption{Egy átlagos mérés spektruma az időben}
+ \label{fig:mag_spect}
+\end{figure}
+
+A következő triviális forrás az inverter. Az eszköz valóban termel mágneses zajt, melynek a kapcsolási frekvencisás komponense a leginkább jelentős (8 - 16 kHz). A nagyságrendje így is azonban 60 nT alatti.
+
+\Aref{tab:results}. táblázatban láthatóak a mérés eredményei, százalékos arányban kifejezve a határ értékekhez képest.
+
+\begin{table}[h]
+\centering
+\caption{Eredmények}
+\label{tab:results}
+\begin{tabular}{lll}
+\hline
+\multicolumn{1}{|l}{ID} & Maximum kitettség   & Pozíció \\ \hline
+EV1                     & 14.3\%         	  & Első utas lábtér           \\
+EV2                     & 17.8\%              & Hátsó akkumulátor felett   \\
+EV3                     & 7.9\%               & Hátsó akkumulátor felett   \\
+EV4                     & 5.9\%               & Hátsó utas lábtér          \\
+EV5                     & 4\%                 & Első utas ülés             \\
+EV6                     & 3.2\%               & Első utas ülés             \\
+EV7                     & 2.1\%               & Első utas ülés             \\
+EV8                     & 2.7\%               & Első utas lábtér           \\
+CV1                     & 2.7\%               & Első utas ülés             \\
+CV2                     & 9\%                 & Hátsó utas lábtér          \\
+CV3                     & 10\%                & Hátsó utas lábtér          \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/magnetic_results.png}}
+ \caption{A mért átlagos eredmények, illetve a határ értékek}
+ \label{fig:mag_results}
+\end{figure}
+
+Jól látható, hogy az eremények jóvla elmaradnak a definiált határét ékektől. Minden elektromos autó esetében elmondható, hogy a legnagyobb tér az akkumulátor, illetve a padlólemez közelében volt. A legnagyobb értékek 14-18\% voltak az elektromos járművek esetében, illetve 10\% környékiek a benzines esetben. A nagy tér mindkét esetben a gyorsulási illetve a fékezési üzem állapotokban keletkeztek. Belső égésű motoros esetben a jármű indítása jelentett még nagyobb expozíciót. Az elektromos járművek esetében a többlet terhelés forrása egyértelműen az inverter és az akkumulátor, de ezek az értékek is jóval alacsonyabbak annál ,hogy kockázatot jelentsenek. Jól mutatja ezt, hogy az elektromos hálózat 50 Hz-es komponense meg tud jelenni a mérésben, pedig annak közlekedéstől függően ki vagyunk téve.
+
+\section{Vezetett Elektromos áram}
+
+Elektromos járművek esetében a trakciós rendszert tápláló akkumulátor üzemi feszültsége jóval az érintés védelmi küszöb felett van, jellemzően több száz voltról beszélünk. A 60 V alatti feszültségekkel ellentétben ez már könnyedén áthatol az ember bőrfelületén. A köztudatban a váltakozó áramú áramütés és annak hatásai inkább jelen vannak, mint az egyenáramú eseté. Ebben az esetben azonban egyenáramú esetről beszélünk.
+
+Az egyenáramú áramütés sok esetben veszélyesebb tud lenni, mint a váltakozó áramú. Az izomgörcsök és a hőhatás itt is fennáll. Ezeken felül az egyenáramnak jelentős kémiai hatása is van. Ez a kémiai hatás az emberi testben részben a vízbontásra vezethető vissza. Ez azt jelenti, hogy a testben található folyadékok, mint pl. a vér belsejében gázfejlődés indul el, buborékokat létrehozva ezzel a  vérerekben. Ezek a buborékok az áram ütés után akár napokig is keringhetnek az ember testében, különösebb probléma nélkül, szerencsés esetben fel is szívódnak. Szerencsétlen esetben azonban akár egy vérröghöz hasonlóan, megakadva valahol, a vér ellátást blokkolva trombózist, infarktust, embóliát stroke-ot okozhatnak.
+
+A másik kémiai hatás az ionizáció. A folyadék bontás kísérete vagy eredménye képpen mérgező vegyületek keletkezhetnek a testen belül. Rossz esetben ez olyannyira súlyos lehet, hogy amputálni kell az érintett végtagot. Ellenkező esetben a méreganyag testben való elterjedése halállal is járhat.
+
+Természetesen üzemszerű állapotban ilyen nem fordulhat elő egy elektromos autó esetében. Az akkumulátor és a nagyfeszültségű rendszer galvanikusan szeparálva van a földelt kis feszültségű rendszertől. Beépítésre kerül egy olyan eszköz is, amely ennek a szigetelésnek az állapotát folyamatosan felügyeli, és már az egyszeres hibát is észre veszi. Mivel az áram ütéshez, vagy tűz kialakulásához az akkumulátor mindkét kivezetésére szükség van, ezért ilyenkor még biztonságban el lehet hagyni a járművet.
+
+Ezen felül az összes csatlakozó ellátásra kerül olyan mechanizmussal ami meggátolja, hogy nyitott állapotban feszültség kerülhessen a rendszerre. Ezen felül ezen csatlakozók fizikai kialakítása is meggátolja, hogy a vezető felületek érinthetőek legyenek.
+
+Elmondható tehát, hogy bár az egyenáramú áram ütés igen súlyos következményekkel jár, a valószínűsége igen kicsi.
+
+%\section{Emissziós hatások}
+
+
+\section{Összefoglalás}
+
+Fentiek alapján tehát elmondható, hogy az elektromos autók a benzines társaikkal szemben nem rendelkeznek egészségügyi hátránnyal. A sugárzott zavarok esetében a kibocsátás egyértelműen nagyobb, de jelentősen a határ értékek alatt marad. Az áram ütést illetően az előírások és a szabványok nagyon sokat tesznek azért, hogy ennek a valószínűsége minimális legyen. A legnagyobb veszélyt a töltő csatlakoztatása hordozza magában. Ez azonban igaz a benzines autókra is, hiszen az egyik legveszélyesebb folyamat, a jármű üzemanyaggal történő felültöltése. Ilyenkor egy igen tűzveszélyes folyadékkal kell dolgozni, amely bár az elektromos esettel ellentétben látható veszély, mégis könnyedén okozhat súlyos sérüléseket, mind anyagi mind személyi értelemben.
+
+
+
+
+
+%The library blocks can be separated to three main parts:
+%\begin{itemize}
+%    \item Duty cycle calculation of the individual semiconductor (diode, IGBT) elements
+%    \item Switching and conduction loss calculations for each element.
+%    \item Temperature calculation from power losses using a three tie constant thermal model %(Foster network or PI). 
+%\end{itemize}
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.9\columnwidth]{figures/foster.png}
+%% where an .eps filename suffix will be assumed under latex, 
+%% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+%% via \DeclareGraphicsExtensions.
+%\caption{The Foster thermal model}
+%\label{fig:foster}
+%\end{figure}
+
+
+
+\
+
+
+% needed in second column of first page if using \IEEEpubid
+%\IEEEpubidadjcol
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.homahazkezeles@gmail.comhomahazkezeles@gmail.com
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation Results}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command, the
+% \label for the overall figure must come after \caption.
+% \hfil must be used as a separator to get equal spacing.
+% The subfigure.sty package works much the same way, except \subfigure is
+% used instead of \subfloat.
+%
+%\begin{figure*}[!t]
+%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
+%\label{fig_second_case}}}
+%\caption{Simulation results}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+
+
+% An example of a floating table. Note that, for IEEE style tables, the 
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that IEEE does not put floats in the very first column - or typically
+% anywhere on the first page for that matter. Also, in-text middle ("here")
+% positioning is not used. Most IEEE journals use top floats exclusively.
+% Note that, LaTeX2e, unlike IEEE journals, places footnotes above bottom
+% floats. This can be corrected via the \fnbelowfloat command of the
+% stfloats package.
+
+
+
+
+% if have a single appendix:
+%\appendix[Proof of the Zonklar Equations]
+% or
+%\appendix  % for no appendix heading
+% do not use \section anymore after \appendix, only \section*
+% is possibly needed
+
+% use appendices with more than one appendix
+% then use \section to start each appendix
+% you must declare a \section before using any
+% \subsection or using \label (\appendices by itself
+% starts a section numbered zero.)
+%
+
+
+
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\begin{thebibliography}{1}
+
+
+\bibitem{uni:hvlabor}
+Energy density - Wikipedia article, \\
+  \url{https://en.wikipedia.org/wiki/Energy_density#Energy_densities_of_common_energy_storage_materials}, \\Utolsó megtekintés: 2018.04.02.
+  
+
+\bibitem{article:char}
+Ronen Hareuveny, Madhuri Sudan, Malka N. Halgamuge, Yoav Yaffe, Yuval Tzabari, Daniel Namir and Leeka Kheifets, Characterization of Extremely Low Frequency Magnetic Fields from Diesel, Gasoline and Hybrid Cars under Controlled Conditions \hskip 1em plus
+  0.5em minus 0.4em\relax International Journal of Environmental Research and Public Health, 2015.
+  
+\bibitem{article:magnetic}
+DAndrea Vassilev, Alain Ferber, Christof Wehrmann, Olivier Pinaud, Meinhard Schilling,
+and Alastair R. Ruddle Magnetic Field Exposure Assessment
+in Electric Vehicles \hskip 1em plus
+  0.5em minus 0.4em\relax IEEE TRANSACTIONS ON ELECTROMAGNETIC COMPATIBILITY, 2015.
+  
+
+  
+\bibitem{article:passanger}
+Pablo Moreno-Torres Concha, Pablo Velez, Marcos Lafoz, and Jaime R. Arribas, Passenger Exposure to Magnetic Fields due to the Batteries of an Electric Vehicle, \hskip 1em plus
+  0.5em minus 0.4em\relax IEEE TRANSACTIONS ON VEHICULAR TECHNOLOGY, 2016.
+
+\bibitem{article:wireless}
+Sangwook Park, Evaluation of Electromagnetic Exposure During 85 kHz Wireless Power Transfer for Electric Vehicles, \hskip 1em plus
+  0.5em minus 0.4em\relax IEEE TRANSACTIONS ON MAGNETICS, 2018.
+
+\bibitem{artice:emf}
+Richard A. Tell1, and Robert Kavet, ELECTRIC AND MAGNETIC FIELDS <100 KHZ IN ELECTRIC AND GASOLINE-POWEREDVEHICLES, \hskip 1em plus
+  0.5em minus 0.4em\relax Radiation Protection Dosimetry, Vol. 172, No. 4, pp. 541–546, 2016.
+  
+  \bibitem{artice:icnrip1}
+ICNIRP,Guidelines on limits for exposure to static magnetic fields,, \hskip 1em plus
+  0.5em minus 0.4em\relax Health Phys., vol. 96, no. 4, pp. 504–514, Apr. 2009.
+
+
+
+\end{thebibliography}
+
+% biography section
+% 
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{picture}}]{John Doe}
+\blindtext
+
+
+
+\end{IEEEbiography}
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+%\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+
+
+
+% that's all folks
+\end{document}
+
+
