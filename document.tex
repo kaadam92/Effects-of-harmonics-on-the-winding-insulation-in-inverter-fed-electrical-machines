@@ -14,7 +14,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Villamos vontatású járművek élettani hatásai}
+\title{Effects of VFD drive system on motor winding insulation}
 
 
 % author names and affiliations
@@ -46,12 +46,17 @@
 % for over three affiliations, or if they all won't fit within the width
 % of the page, use this alternative format:
 % 
+%\author{\IEEEauthorblockN{Kiss Dávid}
+%\IEEEauthorblockA{Budapesti Műszaki és Gazdaságtudományi Egyetem\\
+%Automatizálási és Alklmazott Informatika Tanszék \\
+%E-mail: david.kiss@aut.bme.hu;}
+%}
+
 \author{\IEEEauthorblockN{David Kiss}
-\IEEEauthorblockA{Budapesti Műszaki és Gazdaságtudományi Egyetem\\
-Automatizálási és Alklmazott Informatika Tanszék \\
+\IEEEauthorblockA{Budapest University of Technologies and Economics\\
+Department of Automation and Applied Electronics \\
 E-mail: david.kiss@aut.bme.hu;}
 }
-
 
 
 % use for special paper notices
@@ -64,7 +69,7 @@ E-mail: david.kiss@aut.bme.hu;}
 
 \begin{abstract}
 %\boldmath
-Abstract
+Nowadays conventional electrical motors designs are facing the issue of the increasing number of variable frequency drives (VFDs). Motors fed with VFD systems had to withstand voltage stress with much higher voltage peaks, frequencies and slew rates than seen in grid powered motors. Due to the higher input frequency, the parasitic capacitance of the input cable and the inductance of the motor itself can cause resonance, with voltage spikes multiple times than the nominal voltage. Reflections due to impedance mismatches are also have to be taken account. The additional voltage stress can result in partial discharges (PD), faster insulation degradation, or even insulation breakdown. The presented paper will describe these effects in detail and provide a short introduction into the measures against the failures.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -92,143 +97,123 @@ Motor winding insulation, inverter, harmonics, PWM
 
 \section{Introduction}
 
-\subsection{Energiatárolás}
+\subsection{Insulation in electrical machines}
 
+Electrical motors are the devices which can convert electrical power to mechanical, based on electromagnetic principles. Therefore the largest part of the motor is built from electrically conductive materials. The point of the electrical insulation in electrical machine is to keep the electrical current in the desired conductors. The design goal with electrical machines is to achieve as high power density as possible both in volume and mass. In this approach insulation is not provide any value, however it is necessary to keep the machine functional. The conclusion is to keep the insulation as thin and as light as possible to provide space to magnetically and electrically active volumes, without compromising reliability.
 
-\subsection{Meghajtás}
+Reliability means that these insulation systems are withstanding the normal operation stresses with high enough safety margin to overcome transients and expectable anomalies. The stresses on the motor insulations are present in multiple different manners. To overcome them, the insulator system should have the following properties.
 
+\subsection*{Electrical stresses}
+\begin{itemize}
+	\item High breakdown voltage.
+	\item Good long life performance .
+	\item Low number of partial discharges (no voids in the material).
+	\item Small leakage and creepage currents.
+\end{itemize}
 
+\subsection*{Thermal stresses}
+\begin{itemize}
+	\item Low degradation over time.
+	\item Small deformation during thermal cycles .
+	\item No delamination or disintegration.
+\end{itemize}
 
+\subsection*{Mechanical stresses}
+\begin{itemize}
+	\item High mechanical strength to sustain forces due to handling and mechanical forces under operation.
+	\item Least reduction of mechanical strength within specified operating temperature and voltage.
+\end{itemize}
 
-\section{Sugárzott Elektromos és Mágneses tér}
+These complex demands are presenting a challenging task to engineers, to the manufacturers, and for the insulation material as well. There are standards which defining and classifying insulator properties applied in electrical machines. These standards are the IEC 60085 and the IEC 60034-1.
+A brief description of the insulating materials in use for different classes of insulation is given below to provide an introduction to the types of materials being used in the preparation of a particular class of insulation. The actual ingredients may be an improved version of these materials, in view of continuous researches and development in this field, to search out for still  better and more suitable materials.
 
-Mivel minden áram járta vezető mágneses térrel rendelkezik, így az elektromos autóban található vezetők is.  Mivel ebben az esetben villamos energia szolgálja a jármű mozgatásához szükséges teljesítményt, így ezek az áramok igen nagyok is lehetnek. 600 V-os rendszer feszültség mellett is akár 50 - 100 A. Az akkumulátor és a motorvezérlő egység között DC áram folyik, míg az inverter és a motorok között váltakozó. Léteznek szervezetek, amelyek azzal foglalkoznak, hogy megállapítsák, hogy az emberi testet mekkora terhelés érheti biztonságosan, ilyen például az International Commission on Non-ionizing Radiation Protection (ICNIRP) nevű szervezet. A határ értékeket megadják mind statikus, mind váltakozó mágneses terekre.
+\subsubsection*{Insulation Class A}
+This includes organic fibrous materials on a cellulose base such as paper, pressboard, cotton, cotton cloth and natural silk etc., impregnated with lacquers or immersed in an insulating liquid. The impregnation or immersion ensures that the oxygen content of the air does not affect the insulating properties or enhance the thermal ageing of the insulating material. Typical materials in this class are varnished cloth and oil-impregnated paper.
 
-\begin{table}[h]
-\centering
-\label{my-label}
-\begin{tabular}{lc}
-\hline
-Kitettség típusa   & Mágneses fluxussűrűség \\ \hline
-Foglalkozásbeli    &                        \\
-\hspace{3mm}Fej és test        & 2 T                    \\
-\hspace{3mm}Végtagok           & 8 T                    \\
-Civil              &                        \\
-\hspace{3mm}Test bármely része & 400 mT                 \\ \hline
-\end{tabular}
-\caption{Az ICNIRP határtértékei statikus mágneses terek esetében\cite{artice:icnrip1}}
-\end{table}
+\subsubsection*{Insulation Class E}
+This includes wire enamels on a base of polyvinyl formal, polyurethane or epoxy resins as well as moulding powder plastics on phenol-formaldehyde and similar binders, with cellulose fillers, laminated plastics on paper and cotton cloth base, triacetate cellulose films, films and fibres of polyethylene terephthalate.
 
-A határértékek célja ,hogy védelmet biztosítjon a mágneses tér lehetséges hatásaitól. Ez lehet az idegek stimulációja (1 Hz - 10 MHz) vagy a szövetek melegítése (100 kHz - 300 GHz). Utoljára ezek a határértékek 2010-ben kerültek felülvizsgálatra.
+\subsubsection*{Insulation Class B}
+This includes inorganic materials such as mica, glass fibre and asbestos etc., impregnated or glued together with varnishes or compositions comprising ordinary organic substances for heat resistance such as oil-modified synthetic resins, bitumen, shellac and Bakelite.
 
-A méréseket az autóba helyezett emberi test modell segítségével végezték el. Azokon a pontokon történt mérés, ahol várhatóan nagyobb a kitettség a mágneses térnek. Ilyen lehet az akkumulátor környéke, illetve a padlólemezhez és a motortérhez közel eső részek, pl. az első lábtér. Ezen felül az emberi test számára kritikus területek mérése is megtörtén, pl. a fej környéke. A mérés mind statikusan, mind pedig dinamikusan, különböző felhasználási módik között megtörtént. A felhasználás jellege nem befolyásolta a kialakuló mágneses teret, csak a felvett teljesítmény, ahogy az a \aref{fig:curr_correlation} ábrán is látszik. Ebből fakadóan a mérési ciklus egy erős gyorsítási és fékezési ciklusra redukálódott, illetve hosszútávú haladásra kis és nagy sebesség mellett.
+\subsubsection*{Insulation Class F}
+This includes inorganic materials such as glass fibre or polyester and mica impregnated or glued together with epoxy, polyesterimide (polyamide or polyimide), polyurethane or other resins having superior thermal stability.
 
-\begin{figure}[h]
- \centerline{\includegraphics[width=.85\columnwidth]{.//figures/curr_correl.png}}
- \caption{Az áram és a mágneses fluxussűrűség kapcsolata}
- \label{fig:curr_correlation}
-\end{figure}
+\subsubsection*{Insulation Class H}
+This comprises composite materials on mica, glass fibre and asbestos bases, impregnated or glued together with silicone resins or silicone elastomer. These materials must not contain any organic fibrous materials such as paper or cloth backing, which is covered under class B and even F insulation systems.
 
-A vizsgált járművek pontos típusa nem került publikációra, de a mért paletta jelentős méretű. 8 különböző elektromos meghajtású autót, köztük hibrideket és tisztán elektromosakat, illetve még tüzelőanyag cellás típust is. is vizsgáltak a szerzők, széles teljesítmény spektrumon. A mérésbe referencia gyanánt került 3 belső égésű motoros gépjármű, mind dízel, mind pedig benzines motorral.
-
-
-\begin{table}[h]
-\centering
-\caption{A vizsgált járművek}
-\label{my-label}
-\begin{tabular}{lllll}
-\hline
-\multicolumn{1}{|l}{ID} & Hajtáslánc típus   & Villamos gép típusa & Teljesítmény (kW) & Akkumulátor (kWh) \\ \hline
-EV1                     & Elektromos         & Szénkefés DC        & 11                & 10                          \\
-EV2                     & Plug-in híbrid     & Állandó mágneses    & 30                & 5                           \\
-EV3                     & hibrid             & Indukciós           & 10                & 0,7                         \\
-EV4                     & Elektromos         & Állandó mágneses    & 10                & 14                          \\
-EV5                     & Elektromos         & Asszinkron          & 34                & 24.5                        \\
-EV6                     & Elektromos         & Állandó mágneses    & 40                & 24.                         \\
-EV7                     & Tüzelőanyag-cellás & Állandó mágneses    & 100               & 1.4                         \\
-EV8                     & Elektromos         & Állandó mágneses    & 35                & 16                          \\
-CV1                     & Benzin             & -                   & 75                & -                           \\
-CV2                     & Benzin             & -                   & 66                & -                           \\
-CV3                     & Dízel              & -                   & 125               & -                           \\ \hline
-\end{tabular}
-\end{table}
-
-A mérés során nehéz volt megkülönböztetni a külső hatásokból eredő hatásokat, illetve azokat, amelyek a jármű típusától függetlenül jelentkezhetnek. Ilyen külső forrás lehet pl. a kiépített villamosenergia hálózat mágneses ere, mely egy 50 Hz-es frekvencia komponensként azonosítható. Ezen felül okozhatnak zavart a csatornafedők, melyek felett elhalad a jármű.
-
-A belső források közül kiemelendő a kormány szervó elektromos motorja, mely bár kisebb teljesítményű, de kis feszültségen is működik, így igen nagy áramok folyhatnak rajta. Kiemelendő, és nem triviális belső forrás még a jármű kereke. A gumiabroncsok acél nagy sebességgel forgó acél köpenye egy a fordulatszámmal arányos frekvenciájú mágneses teret állít elő, mely szintén jól mérhető, nagyság rendje 1 - 2 \mu{}T.
-
-Elektromos járművek esetében a nyilvánvaló források az akkumulátor illetve a vezetékezés maga. Mivel az indukált mágneses tér a az áram által bezárt hurok méretével arányos, ezért az akkumulátor, nagy fizikai kiterjedése miatt nagy térrel is rendelkezhet. Ezen segíteni sem igazán lehet, hiszen ezek a méretek a technológiából adódnak. Ezzel szemben a kábelezés esetében látványos hatása van a fizikai elrendezésnek. Abban az esetben amikor a két áramvezető egymással párhuzamosan halad, mint pl. a kardán alagútban, az indukált tér sokkal kisebb, mint amikor a két vezeték eltávolodik egymástól. Ilyen tér lehet a bekötések helye.
-
-\begin{figure}[h]
- \centerline{\includegraphics[width=.85\columnwidth]{.//figures/ev_spect.png}}
- \caption{Egy átlagos mérés spektruma az időben}
- \label{fig:mag_spect}
-\end{figure}
-
-A következő triviális forrás az inverter. Az eszköz valóban termel mágneses zajt, melynek a kapcsolási frekvencisás komponense a leginkább jelentős (8 - 16 kHz). A nagyságrendje így is azonban 60 nT alatti.
-
-\Aref{tab:results}. táblázatban láthatóak a mérés eredményei, százalékos arányban kifejezve a határ értékekhez képest.
+The temperature limit of each class is presented in Table \ref{tab:temp}. The temperature values defined are assuming 20 years of working life.
 
 \begin{table}[h]
-\centering
-\caption{Eredmények}
-\label{tab:results}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \hline
-\multicolumn{1}{|l}{ID} & Maximum kitettség   & Pozíció \\ \hline
-EV1                     & 14.3\%         	  & Első utas lábtér           \\
-EV2                     & 17.8\%              & Hátsó akkumulátor felett   \\
-EV3                     & 7.9\%               & Hátsó akkumulátor felett   \\
-EV4                     & 5.9\%               & Hátsó utas lábtér          \\
-EV5                     & 4\%                 & Első utas ülés             \\
-EV6                     & 3.2\%               & Első utas ülés             \\
-EV7                     & 2.1\%               & Első utas ülés             \\
-EV8                     & 2.7\%               & Első utas lábtér           \\
-CV1                     & 2.7\%               & Első utas ülés             \\
-CV2                     & 9\%                 & Hátsó utas lábtér          \\
-CV3                     & 10\%                & Hátsó utas lábtér          \\ \hline
+Class of insulation & Maximum attainable temperature\\ as in IEC 60085 & \multicolumn{2}{l}{Permissible operation temperature\\as in IEC 60034-1 by the resistance method} \\ \cline{3-4} 
+                    &                                                & Up to 5 MW                                      & Above 5 MW                                     \\ \hline
+                    & °C                                             & °C                                              & °C                                             \\
+A                   & 105                                            & 100                                             & 100                                            \\
+E                   & 120                                            & 115                                             & 110                                            \\
+B                   & 130                                            & 120                                             & 120                                            \\
+F                   & 155                                            & 145                                             & 145                                            \\
+H                   & 180                                            & 165                                             & 165                                            \\ \hline
 \end{tabular}
+\caption{Insulation classes}
+\label{tab:temp}
 \end{table}
 
+One of the major reason behind motor failures is insulation aging and degradations. These effects are not caused by the VFD drive feeding, but it can be accelerated due the high frequency input. Over time, th insulation becomes more and more brittle, the thermal expansion cycles and the mechanical stress will cause small cracks. This small cracks are become larger and larger, pollution and moisture can reach to the conductor, and the insulation will be weaker and weaker, or starts disintegrating. The life expectancy of the insulation will also be affected by an excessive  operating temperature. It is halved for every 11∞C rise in temperature over its rated value and occurs when a machine is occasionally over-loaded. Sometimes the size of the machine may be only marginal when it was initially chosen and with the passage of time, it may be required to perform duties that are too arduous.
+
+\subsection{Insulations systems}
+\subsubsection{Steel lamination insulations}
+The body of the electrical motor is laminated to prevent eddy currents. These laminates have to be insulated from each other to keep the eddy currents inside them. For small rating this is provided by oxidizing the surface of each plate on both side. For large ratings some resin layer is applied for one or both sides on the plates.
+
+\subsubsection{Winding insulations}
+
+Different manufacturers adopt to different practices of insulating the coil or the windings. Impregnation in a recommended insulating varnish, normally synthetic or epoxy, followed by baking (curing), in a temperature-controlled oven, at a specified temperature for a specific period.
+For powerhouse insulation treatment the stator may be dipped in varnish for a minimum two to three times, each dipping being followed by backing. Sometimes one immersion of the entire stator and
+two additional immersions of the overhangs followed by backing may also be sufficient.
+
+\subsubsection*{Random winding}
+
+The motor winding is constructed by wire, usually copper. If the winding is applied without any external formatting, it is called random winding. In this case the wires in one slot are not aligned in uniform manner, they filling up the space randomly, causing uneven distances, and air gaps between the wires. Increasing the risk of possible voids during impregnation.
+
 \begin{figure}[h]
- \centerline{\includegraphics[width=.85\columnwidth]{.//figures/magnetic_results.png}}
- \caption{A mért átlagos eredmények, illetve a határ értékek}
- \label{fig:mag_results}
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/random_vs_formed.png}}
+ \caption{Random and formed winding.}
+ \label{fig:rnd vs formed}
 \end{figure}
 
-Jól látható, hogy az eremények jóvla elmaradnak a definiált határét ékektől. Minden elektromos autó esetében elmondható, hogy a legnagyobb tér az akkumulátor, illetve a padlólemez közelében volt. A legnagyobb értékek 14-18\% voltak az elektromos járművek esetében, illetve 10\% környékiek a benzines esetben. A nagy tér mindkét esetben a gyorsulási illetve a fékezési üzem állapotokban keletkeztek. Belső égésű motoros esetben a jármű indítása jelentett még nagyobb expozíciót. Az elektromos járművek esetében a többlet terhelés forrása egyértelműen az inverter és az akkumulátor, de ezek az értékek is jóval alacsonyabbak annál ,hogy kockázatot jelentsenek. Jól mutatja ezt, hogy az elektromos hálózat 50 Hz-es komponense meg tud jelenni a mérésben, pedig annak közlekedéstől függően ki vagyunk téve.
+\subsubsection*{Formed winding}
 
-\section{Vezetett Elektromos áram}
+For large motors, the practice is to wind the stator with formed coils (Figure 9.2). The coils are pre-formed and cured before insertion into the stator slots. They are insulated with resin-rich glass and mica paper tapes. The process of impregnation is therefore termed ‘resin-rich’ insulation. The completed formed wound stator is then heated to remove trapped moisture and finally impregnated in varnish class F or H as required. While vacuum pressure impregnation is the preferred method being more reliable, as noted below, other methods also providing satisfactory results and being economical are practiced by many manufacturers up to 1000 kW or so. The stator is then cured in an oven as described above. The process of insulation and curing conforms to powerhouse insulation requirements. This practice facilitates easy removal of an individual coil at site in case of a damage and replacement with a spare coil.
 
-Elektromos járművek esetében a trakciós rendszert tápláló akkumulátor üzemi feszültsége jóval az érintés védelmi küszöb felett van, jellemzően több száz voltról beszélünk. A 60 V alatti feszültségekkel ellentétben ez már könnyedén áthatol az ember bőrfelületén. A köztudatban a váltakozó áramú áramütés és annak hatásai inkább jelen vannak, mint az egyenáramú eseté. Ebben az esetben azonban egyenáramú esetről beszélünk.
-
-Az egyenáramú áramütés sok esetben veszélyesebb tud lenni, mint a váltakozó áramú. Az izomgörcsök és a hőhatás itt is fennáll. Ezeken felül az egyenáramnak jelentős kémiai hatása is van. Ez a kémiai hatás az emberi testben részben a vízbontásra vezethető vissza. Ez azt jelenti, hogy a testben található folyadékok, mint pl. a vér belsejében gázfejlődés indul el, buborékokat létrehozva ezzel a  vérerekben. Ezek a buborékok az áram ütés után akár napokig is keringhetnek az ember testében, különösebb probléma nélkül, szerencsés esetben fel is szívódnak. Szerencsétlen esetben azonban akár egy vérröghöz hasonlóan, megakadva valahol, a vér ellátást blokkolva trombózist, infarktust, embóliát stroke-ot okozhatnak.
-
-A másik kémiai hatás az ionizáció. A folyadék bontás kísérete vagy eredménye képpen mérgező vegyületek keletkezhetnek a testen belül. Rossz esetben ez olyannyira súlyos lehet, hogy amputálni kell az érintett végtagot. Ellenkező esetben a méreganyag testben való elterjedése halállal is járhat.
-
-Természetesen üzemszerű állapotban ilyen nem fordulhat elő egy elektromos autó esetében. Az akkumulátor és a nagyfeszültségű rendszer galvanikusan szeparálva van a földelt kis feszültségű rendszertől. Beépítésre kerül egy olyan eszköz is, amely ennek a szigetelésnek az állapotát folyamatosan felügyeli, és már az egyszeres hibát is észre veszi. Mivel az áram ütéshez, vagy tűz kialakulásához az akkumulátor mindkét kivezetésére szükség van, ezért ilyenkor még biztonságban el lehet hagyni a járművet.
-
-Ezen felül az összes csatlakozó ellátásra kerül olyan mechanizmussal ami meggátolja, hogy nyitott állapotban feszültség kerülhessen a rendszerre. Ezen felül ezen csatlakozók fizikai kialakítása is meggátolja, hogy a vezető felületek érinthetőek legyenek.
-
-Elmondható tehát, hogy bár az egyenáramú áram ütés igen súlyos következményekkel jár, a valószínűsége igen kicsi.
-
-%\section{Emissziós hatások}
+\begin{figure}[h]
+ \centerline{\includegraphics[width=.85\columnwidth]{.//figures/form_coil.png}}
+ \caption{View of a formed coil.}
+ \label{fig:form_coil}
+\end{figure}
 
 
-\section{Összefoglalás}
+\section{VFD drive properties}
 
-Fentiek alapján tehát elmondható, hogy az elektromos autók a benzines társaikkal szemben nem rendelkeznek egészségügyi hátránnyal. A sugárzott zavarok esetében a kibocsátás egyértelműen nagyobb, de jelentősen a határ értékek alatt marad. Az áram ütést illetően az előírások és a szabványok nagyon sokat tesznek azért, hogy ennek a valószínűsége minimális legyen. A legnagyobb veszélyt a töltő csatlakoztatása hordozza magában. Ez azonban igaz a benzines autókra is, hiszen az egyik legveszélyesebb folyamat, a jármű üzemanyaggal történő felültöltése. Ilyenkor egy igen tűzveszélyes folyadékkal kell dolgozni, amely bár az elektromos esettel ellentétben látható veszély, mégis könnyedén okozhat súlyos sérüléseket, mind anyagi mind személyi értelemben.
+\section{Insulation failure mechanism}
+
+\section{Preventing insulation over-stress}
+
+
+\section{Inverter rated motors}
 
 
 
 
 
-%The library blocks can be separated to three main parts:
-%\begin{itemize}
-%    \item Duty cycle calculation of the individual semiconductor (diode, IGBT) elements
-%    \item Switching and conduction loss calculations for each element.
-%    \item Temperature calculation from power losses using a three tie constant thermal model %(Foster network or PI). 
-%\end{itemize}
+
+
+
+\section{Summary}
+
+
+
+
 
 %\begin{figure}[h]
 %\centering
