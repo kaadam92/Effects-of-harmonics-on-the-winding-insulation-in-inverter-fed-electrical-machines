@@ -46,7 +46,7 @@
 % for over three affiliations, or if they all won't fit within the width
 % of the page, use this alternative format:
 % 
-\author{\IEEEauthorblockN{Kiss Dávid}
+\author{\IEEEauthorblockN{David Kiss}
 \IEEEauthorblockA{Budapesti Műszaki és Gazdaságtudományi Egyetem\\
 Automatizálási és Alklmazott Informatika Tanszék \\
 E-mail: david.kiss@aut.bme.hu;}
@@ -64,7 +64,7 @@ E-mail: david.kiss@aut.bme.hu;}
 
 \begin{abstract}
 %\boldmath
-Az Elektromos járművek gyorsuló elterjedésével joggal merül fel az igény, hogy megvizsgáljuk milyen élettani hatásai lehetnek a napi szintű érintkezésnek. Bár a villamos vontatás a tömegközlekedésben és a teherszállításban évtizedek óta mindennapos, a társadalom számára mégis az Elektromos autózás rohamos terjedésével vált a köztudatban létező fogalommá. A 90-es éve folyamán a mobiltelefonok elterjedésével a kritikus hangok is megjelentek, melyek a rádió-telefonálás vélt vagy valós élettani következményeit kutatták. Ezek a kérdések azóta is újra és újra felmerülnek, illetve felmerültek az Elektromos gépjárművek kapcsán is. Bár az Egészségügyi Világszervezet (WHO) az alacsony frekvenciás Elektromos és mágneses teret lehetséges rák okozónak tarja, egyértelmű kutatási eredmények ezekben a témákban még nem születtek. Jelen írás ezt a témát kívánja körbejárni, kezdve az Elektromos jármű kapcsán felmerülő lehetséges veszély forrásokkal, majd pedig az ezek által okozott jelenségek súlyosságának vizsgálatával.
+Abstract
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -75,7 +75,7 @@ Az Elektromos járművek gyorsuló elterjedésével joggal merül fel az igény,
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Electric Vehicle, EV, Radiated Emission, ELF
+Motor winding insulation, inverter, harmonics, PWM
 \end{IEEEkeywords}
 
 
@@ -90,49 +90,14 @@ Electric Vehicle, EV, Radiated Emission, ELF
 \IEEEpeerreviewmaketitle
 
 
-\section{Bevezetés}
+\section{Introduction}
 
 \subsection{Energiatárolás}
-
-Az Elektromos autók hajtás rendszere nagyban eltér a konvencionálisnak mondható, belső égésű motoros megoldástól. Ezek a járművek egy tartályban hordozzák az üzemanyagot, melyben tárolják azt az energiát, amit később a belső égésű motor segítségével mozgási energiává szeretnénk alakítani. Ez az üzemanyag többnyire benzin vagy gázolaj.
-
-\begin{table}[h]
-\centering
-\caption{Járművekben használt energiatároló megoldások energia sűrűsége\cite{wiki_dens}}
-\label{density}
-\begin{tabular}{l|l|lll}
-                   & \multicolumn{1}{l|}{Energia sűrűség (MJ/L)} & \multicolumn{1}{l}{Energia sűrűség (MJ/kg)} &  &  \\ \cline{1-3}
-Benzin             & 34,5                                       & 46,4                                       &  &  \\ \cline{1-3}
-Dízel              & 35,8                                       & 48                                         &  &  \\ \cline{1-3}
-Li-Ion akkumulátor & 4,32                                       & 1,8                                        &  & 
-\end{tabular}
-\end{table}
-
-Ezt helyettesíti az Elektromos járművekben az akkumulátor helyettesíti, mely napjainkban leggyakrabban Li-Ion cellákból épül fel. Ez maga az első veszély forrás. Ahhoz, hogy járművünk hatótávolsága megengedje a mindennapi használatot, óriási mennyiségű energiát kell magunkkal vinnünk. A Tesla P75D, mely éppen ezzel, a mindennapi használhatósággal kívánta magára felhívni a figyelmet, $75 kWh\ ( = 270 MJ)$ akkumulátor kapacitással rendelkezik, és ezzel a gyártó szerint 259 mérföld, azaz 419 km megtételére képes. \Aref{density}. táblázatból kiolvasható adatok alapján, ez azt jelenti, hogy körülbelül  $150\ kg$ nettó tömegű akkumulátort kell az autónak magával vinnie. Ehhez természetesen még hozzáadódik a biztonságos tároláshoz szükséges dobozolás tömege is. Ez a jármű $2163\ kg$ össztömegéből közel $10 \%$-ot tesz ki.
-
-Az akkumulátor fizikai tulajdonságaiból adódó probléma, hogy soha nem hozható energia mentes állapotba, azaz a vele való munka mindig veszélyt hordoz magában, ellentétben az üzemanyag tartállyal, melyet leeresztve meggyőződhetünk annak energia mentességéről. Érzékeny továbbá a mechanikai sérülésekre. Egy deformálódott vagy felsértett cella könnyedén lángra kaphat, akár napokkal a sérülés bekövetkezte után. Az így keletkező tűz pedig a szomszédos cellákat is begyújthatja. Ezek a cellák érzékenyek továbbá az üzemi tartományok pontos betartására is. Igaz ez mind az üzemi feszültség tartományra, mind a terhelő és töltő áramra, mind pedig a cellák hőmérsékletére. Ezeknek a paramétereknek a betartására az akkumulátorhoz tartozó menedzsment elektronika figyel.
-
-
-Ezek az akkumulátorok sok feszültség szinten működhetnek, a mild-hybrid járművek $48\ V$-os rendszerétől kezdve egészen a $400-800\ V$-os rendszerekig. Ekkora feszültség szinteken az érintésvédelem témaköre sem maradhat említés nélkül. A jármű akkumulátorok a legtöbb esetben úgy kerülnek megépítésre, hogy annak háza és ezáltal a a jármű vázszerkezete is galvanikusan független az akkumulátor minden kivezetésétől. Ezáltal a nagyfeszültség "lebeg" a jármű referenciapontjához képest, illetve szabvány írja elő a szükséges átütési szilárdságot is. Ennek a szigetelésnek a meglétét egy eszköz, a szigetelés vizsgáló berendezés (IMD- Insulation Monitoring Device). Ez a berendezés jelzi a jármű vezérlésének, hogy szigetelési hiba lépett fel a rendszerben, így meg lehet tenni a szükséges óvintézkedéseket és el lehet hagyni a járművet.
-
-Emiatt különösen fontos, hogy az akkumulátor mindkét kivezetése galvanikusan el van választva a többi földelt elemtől a járművön: az egyszeres szigetelési hiba önmagában még nem okoz problémát. Mivel föld független egyenáramú rendszerről van szó, ahhoz hogy áramütés érhesse az embert, az akkumulátor mindkét kivezetésest meg kell érinteni. Vagy mivel a soros celláknak köszönhetően az akkumulátoron belül több feszültségszint is keletkezik, egy kellően nagy potenciál különbségű szakasz mindkét végét. Ahhoz tehát, hogy az áramütés előfordulhasson, kétszeres szigetelési hibának kell keletkezni, aminek a valószínűsége elhanyagolható, illetve az első hiba után a jármű meggátolja a további használatot. Amennyiben mégis keletkezne egy második szigetelési hiba, akkor sem inkább a közvetlen áramütés, hanem a tűz kialakulása jelentene nagyobb veszélyt. A jól földelt vázszerkezettel ugyanis rövidre zárjuk az akkumulátor celláit. Szerencsés esetben ez az akkumulátor biztosítóin keresztül történik, így azok megvédik az akkumulátort a károsodástól, azonban ha az akkumulátor doboza sérül, a cellák közvetlenül érhetnek hozzá a jármű vázához. Így olyan áramkör alakul ki, amelyben semmilyen áram korlátozó elem nem található, így pedig a tűz kialakulása valószínűleg elkerülhetetlen. Áramütésre, bár igen is valószínűséggel, a jármű töltése közben van még esély.
-
-Látható tehát, hogy önmagában az energia tárolás mennyi veszélyt hordoz magában. Természetesen a konvencionális üzemanyagok is veszélyesek, rendkívül tűzveszélyes folyadékok, ehhez a fajta veszélyhez azonban már jobban hozzászokott a társadalom. Ezen felül benzin és gázolaj esetében szabad szemmel is jól látható a veszély forrás jelenléte, a folyadék látható, a gőze érezhető, így pedig könnyebb reagálni is a különböző helyzetekre.
 
 
 \subsection{Meghajtás}
 
-Az akkumulátor önmagában nem elegendőd az Elektromos jármű üzemeltetéséhez. Ehhez szükséges még a motor vezérlő elektronika és maga a villamos motor is. A villamos gép többnyire három fázisú szinkron vagy aszinkron forgó gép. Ezek a gép típusok gyakorlatilag karbantártás mentesek, egy darab mozgó alkatrész tartalmaznak, illetve nincsen bennük kommutátor és egyéb kopó alkatrész (a csapágyazástól eltekintve). Sokkal egyszerűbb mechanikai konstrukció tehát, mint egy belső égésű motor, melyben megszámlálhatatlan forgó és alternáló mozgást végző alkatrész található. Nincsen lokális káros anyag kibocsátása, mivel nem használ fel semmilyen tüzelőanyagot. Ez nem jelenti azonban azt, hogy nem beszélhetnénk az Elektromos járművek emissziójáról, hiszen a felhasznált Elektromos energiát elő is kell állítani. Az Elektromos meghajtású jármű emisszióját tehát nagyban meghatározza, hogy milyen típusú erőműben került előállításra az akkumulátorban tárolt energia. Ezen felül beszélhetünk még a járműnek az életciklusra vonatkoztatott káros anyag kibocsátásáról. A jármű gyártása leginkább az akkumulátor miatt egészen más technikai folyamatokat igényel, mint belő égésű motoros társaié, így nem tekinthetünk el ennek az elemzésétől sem. Bár nem közvetlenül, de a környezet terhelésnek is lehet élettani következménye, így a IV. fejezet foglalkozik röviden ezzel a témával.
 
-Mint ahogy korábban említettük, az Elektromos járművek leggyakrabban három fázisú villamos géppel kerülnek meghajtásra. Mivel az akkumulátorban egyenáramú formában tároljuk az energiát, szükség van egy motorvezérlő elektronikára, mely ezt a teljesítmény átalakítást elvégzi, és az akkumulátorban tárolt energiát vezérelhető formában bocsátja a motorok rendelkezésére.
-
-Ez a teljesítmény átalakítás általában három fázisú feszültség-inverterrel kerül implementálásra. Ez a berendezés a három fázisú szinusz jelet három darab félhíd kapcsolású inverter szinuszos modulációjával éri el. Ez a modulációs frekvencia típusonként eltérő lehet, illetve akár változhat is, de nagyságrendjét tekintve $2 - 20\ kHz$ között helyezkedik el. Így tehetát a motorvezérlő és a motorok közti vezetékek egy a fenti alapfrekvenciájú, modulált, nagy feszültség-meredekségű PWM (Pulse Width Modulation, impulzus-szélesség moduláció) jelet szállítanak, nagy teljesítménnyel.
-
-Az áram azonban a motor Elektromos fordulatszáma szerinti alapharmónikus frekvenciával rendelkezik, mivel a motor tekercselésének induktivitása szűri a rajta folyó áramot. Természetesen az áramban is megjelenik a modulációs frekvencia, illetve nagyobb rendszámú felharmónikusok is.
-
-Így elmondható tehát, hogy a motorokhoz vezető kábelek mind Elektromos mind pedig mágneses térrel rendelkeznek. Az Elektromos tér csökkentését segíti árnyékolt kábel alkalmazása. A mágneses teret azonban nehezen tudjuk árnyékolni, ez ellen leginkább a jó pozicionálás véd.
-
-A II. fejezet az ilyen sugárzott terek hatását vizsgálja. A témából adódóan célszerűnek tűnik egy benzines és egy Elektromos jármű összehasonlítása. Így képet kaphatunk, hogy a hajtáslánc működési elvégből adódik-e különbség a mért értékekben, és milyen irányba. A III. fejezetben az esetleges áramütés során fellépő veszélyeket tárgyalja a cikk, az utolsó IV. fejezetben a jármű élet ciklusára vetített környezetkárosító hatásokat kerülnek bemutatásra.
 
 
 \section{Sugárzott Elektromos és Mágneses tér}
